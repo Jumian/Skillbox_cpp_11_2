@@ -1,18 +1,28 @@
 #include <iostream>
 
 bool is_email(std::string email){
-    std::string left,right;
+    std::string left="",right="";
     bool bLeft=true,bDot=false;
     for(int i = 0; i<email.length();i++){
-        if (email[i]<'!' || email[i]>'['&& email[i]>']'){
+        if (email[i]<'!' || email[i]>'['&& email[i]<']' || email[i]=='\"'||email[i]=='('||email[i]==')'){
             return false;
         }
+        if (email[i]=='.' && bDot){
+            return false;
+        }
+        else if (email[i]=='.' && !bDot) bDot = true;
+        else if (email[i]!='.' && bDot) bDot=false;
 
         if (email[i]=='@'&& bLeft) bLeft=false;
-        else if (email[i]=='@'&& !bLeft) return false;
-        else (bLeft)?left:right+=email[i];
-
+        else if (email[i]=='@'&& !bLeft) {
+            return false;
+        }
+        else (bLeft?left:right)+=email[i];
     }
+    if (left.length()>64||right.length()>63||right.length()<=0||left.length()<=0){
+        return false;
+    }
+    std::cout << left<< " " << right<<std::endl;
     return true;
 }
 
@@ -21,7 +31,7 @@ int main() {
 
     std::cout << "Email check:" << std::endl;
     std::cin >>str;
-    std::cout << is_email(str)?"Yes":"No";
+    std::cout << (is_email(str)?"Yes":"No");
 
     return 0;
 }
