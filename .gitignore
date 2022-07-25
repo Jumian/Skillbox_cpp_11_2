@@ -7,8 +7,8 @@
 *.o
 *.obj
 
-cmake-build-debug/*.*
-.idea/*.*
+cmake-build-debug/
+.idea/
 
 # Precompiled Headers
 *.gch
