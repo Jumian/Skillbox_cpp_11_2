@@ -4,24 +4,32 @@ bool is_email(std::string email){
     std::string left="",right="";
     bool bLeft=true,bDot=false;
     for(int i = 0; i<email.length();i++){
-        if (email[i]<'!' || email[i]>'['&& email[i]<']' || email[i]=='\"'||email[i]=='('||email[i]==')'){
+        char chr=email[i];
+        if (chr<'!' || chr>='['&& chr<=']' || chr=='\"'||chr=='('||chr==')'){
             return false;
         }
-        if (email[i]=='.' && bDot){
+        if (chr=='.' && bDot){
             return false;
         }
-        else if (email[i]=='.' && !bDot) bDot = true;
-        else if (email[i]!='.' && bDot) bDot=false;
+        else if (chr=='.' && !bDot) bDot = true;
+        else if (chr!='.' && bDot) bDot=false;
 
-        if (email[i]=='@'&& bLeft) bLeft=false;
-        else if (email[i]=='@'&& !bLeft) {
+        if (chr=='@'&& bLeft) bLeft=false;
+        else if (chr=='@'&& !bLeft) {
             return false;
         }
-        else (bLeft?left:right)+=email[i];
+        else {
+            (bLeft ? left : right) += chr;
+            if (!bLeft && (!(chr >= 'a' && chr <= 'z') && !(chr >= 'A' && chr <= 'Z') &&
+                chr != '.' && chr != '-' && !(chr >= '0' && chr <= '9') && chr!='@')){
+                return false;
+            }
+        }
     }
     if (left.length()>64||right.length()>63||right.length()<=0||left.length()<=0){
         return false;
     }
+
     //std::cout << left<< " " << right<<std::endl;
     return true;
 }
@@ -51,7 +59,7 @@ int main() {
     test("A@b@c@example.com");
     test("a\"b(c)d,e:f;g<h>i[j\\k]l@example.com");
     test("1234567890123456789012345678901234567890123456789012345678901234+x@example.com");
-    test("i_like_underscore@but_its_not_allow_in _this_part.example.com");
+    test("i_like_underscore@but_its_not_allow_in_this_part.example.com");
 
     std::cout << "Email check:" << std::endl;
     std::cin >>str;
