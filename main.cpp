@@ -38,8 +38,7 @@ void test(std::string arg){
     std::cout << arg << std::endl;
     std::cout << (is_email(arg)?"Yes":"No")<<std::endl;
 }
-int main() {
-    std::string str;
+void all_tests(){
     std::cout << "Correct emails:"<<std::endl;
     test("simple@example.com");
     test("very.common@example.com");
@@ -60,11 +59,14 @@ int main() {
     test("a\"b(c)d,e:f;g<h>i[j\\k]l@example.com");
     test("1234567890123456789012345678901234567890123456789012345678901234+x@example.com");
     test("i_like_underscore@but_its_not_allow_in_this_part.example.com");
-
-    std::cout << "Email check:" << std::endl;
+}
+int main() {
+    std::string str;
+    std::cout << "Input email address: " << std::endl;
     std::cin >>str;
     std::cout << (is_email(str)?"Yes":"No");
 
+    //    all_tests();
 
 
     return 0;
